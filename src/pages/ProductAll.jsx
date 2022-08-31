@@ -1,7 +1,10 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
+import ProductCard from '../component/ProductCard';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const ProductAll = () => {
+	const [productList, setProductList] = useState([]);
 
 	// API 호출 함수
 	const getProducts = async() => {
@@ -10,13 +13,22 @@ const ProductAll = () => {
 		let data = await response.json();
 
 		// console.log(data);
+		setProductList(data);
 	}
 
 	useEffect(()=>{
 		getProducts();
 	},[])
 	return (
-		<div>전체 상품 페이지</div>
+		<div>
+			<Container>
+				<Row>
+					{productList.map((menu, index) => (
+						<Col lg={3} key={index}><ProductCard item={menu} /></Col>
+					))}
+				</Row>
+			</Container>
+		</div>
 	)
 }
 
