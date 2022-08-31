@@ -34,3 +34,7 @@
 .search-input input:focus {
   outline: none;
 }
+.product-img {
+  display: flex;
+  justify-content: flex-end;
+}
