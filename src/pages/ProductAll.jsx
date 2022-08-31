@@ -2,13 +2,17 @@ import React from 'react';
 import { useEffect,useState } from 'react';
 import ProductCard from '../component/ProductCard';
 import { Container, Row, Col } from 'react-bootstrap';
+import { useSearchParams } from 'react-router-dom';
 
 const ProductAll = () => {
 	const [productList, setProductList] = useState([]);
+	const [query, setQuery] = useSearchParams();
 
 	// API 호출 함수
 	const getProducts = async() => {
-		let url = 'http://localhost:3001/products';
+		let searchQuery = query.get('q') || "";
+		// console.log("query?",searchQuery);
+		let url = `http://localhost:3001/products?q=${searchQuery}`;
 		let response = await fetch(url);
 		let data = await response.json();
 
@@ -18,7 +22,7 @@ const ProductAll = () => {
 
 	useEffect(()=>{
 		getProducts();
-	},[])
+	},[query])
 	return (
 		<div>
 			<Container>
